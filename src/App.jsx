@@ -12,8 +12,8 @@ function App() {
   const [total, setTotal] = useState(0)
 
   const fetchProducts = async (q, page) => {
-    let skip = (page-1)*10
-    const resp = await axios.get(`https://dummyjson.com/products/search?q=${q}&limit=100&skip=${skip}`)
+    let skip = (page - 1) * 10
+    const resp = await axios.get(`https://dummyjson.com/products/search?q=${q}&limit=10&skip=${skip}`)
     console.log(resp.data);
     setTotal(resp.data.total)
     setProducts(resp.data.products)
@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     fetchProducts(searchText, currentPage)
-  }, [searchText,currentPage])
+  }, [searchText, currentPage])
 
 
   return (
