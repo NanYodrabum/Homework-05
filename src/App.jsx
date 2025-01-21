@@ -4,18 +4,24 @@ import ProductList from "./components/ProductList"
 import SearchBar from "./components/SearchBar"
 import axios from "axios"
 
+
 function App() {
   const [products, setProducts] = useState([])
+  const [searchText, setSearchText] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [total, setTotal] = useState(0)
 
-  const fetchProducts = async () => {
-    const resp = await axios.get(`https://dummyjson.com/products`)
+  const fetchProducts = async (q, page) => {
+    let skip = (page-1)*10
+    const resp = await axios.get(`https://dummyjson.com/products/search?q=${q}&limit=100&skip=${skip}`)
     console.log(resp.data);
+    setTotal(resp.data.total)
     setProducts(resp.data.products)
   }
 
-  useEffect(()=>{
-    fetchProducts()
-  },[])
+  useEffect(() => {
+    fetchProducts(searchText, currentPage)
+  }, [searchText,currentPage])
 
 
   return (
@@ -24,10 +30,14 @@ function App() {
         Product Search
       </h1>
       <div className="flex gap-4">
-        <SearchBar />
-        <PageNavigate />
+        <SearchBar searchText={searchText} setSearchText={setSearchText} />
+        <PageNavigate
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          total={total}
+        />
       </div>
-        <ProductList products={products} />
+      <ProductList products={products} />
     </div>
   )
 }
