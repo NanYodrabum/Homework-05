@@ -1,9 +1,21 @@
+import { useEffect, useState } from "react"
 import PageNavigate from "./components/PageNavigate"
-import ProductItem from "./components/ProductItem"
 import ProductList from "./components/ProductList"
 import SearchBar from "./components/SearchBar"
+import axios from "axios"
 
 function App() {
+  const [products, setProducts] = useState([])
+
+  const fetchProducts = async () => {
+    const resp = await axios.get(`https://dummyjson.com/products`)
+    console.log(resp.data);
+    setProducts(resp.data.products)
+  }
+
+  useEffect(()=>{
+    fetchProducts()
+  },[])
 
 
   return (
@@ -11,11 +23,11 @@ function App() {
       <h1 className="text-3xl font-bold text-pink-300 hover:underline">
         Product Search
       </h1>
-      <div className="flex">
+      <div className="flex gap-4">
         <SearchBar />
         <PageNavigate />
       </div>
-        <ProductList />
+        <ProductList products={products} />
     </div>
   )
 }
