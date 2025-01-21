@@ -20,7 +20,7 @@ function PageNavigate(props) {
     return (
         <div className='flex items-center gap-1 border'>
             <button
-                className='bg-pink-300 border px-1'
+                className='btn btn-xs btn-primary'
                 onClick={() => hdlClick(-1)}
             >Prev</button>
             <input className='w-10'
@@ -28,7 +28,7 @@ function PageNavigate(props) {
                 onChange={hdlChange}
             />
             <button
-                className='bg-pink-300 border px-1'
+                className='btn btn-xs btn-primary'
                 onClick={() => hdlClick(+1)}
             >Next</button>
             <p>{start}-{end} of {total}</p>
